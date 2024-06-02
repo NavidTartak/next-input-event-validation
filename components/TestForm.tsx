@@ -5,6 +5,7 @@ import {
   onChangeHandler_Decimal,
   onChangeHandler_Digits,
   onChangeHandler_MultiSpace,
+  onChangeHandler_ValidName,
 } from "@/utils/OnInputChangeHelper";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -52,7 +53,7 @@ const TestForm = () => {
           className="w-full border border-stone-400 bg-slate-100 h-[34px] rounded-md outline-none px-2 text-[14px]"
           value={data.name}
           onChange={(e) =>
-            onChangeHandler_MultiSpace(
+            onChangeHandler_ValidName(
               e,
               (value: any) => {
                 setData({
@@ -72,7 +73,7 @@ const TestForm = () => {
           className="w-full border border-stone-400 bg-slate-100 h-[34px] rounded-md outline-none px-2 text-[14px]"
           value={data.lastname}
           onChange={(e) =>
-            onChangeHandler_MultiSpace(
+            onChangeHandler_ValidName(
               e,
               (value: any) => {
                 setData({
@@ -167,7 +168,7 @@ const TestForm = () => {
           value={formik.values.name}
           name="name"
           onChange={(e) =>
-            onChangeHandler_MultiSpace(
+            onChangeHandler_ValidName(
               e,
               formik.handleChange,
               formik.values.name,
@@ -183,7 +184,7 @@ const TestForm = () => {
           value={formik.values.lastname}
           name="lastname"
           onChange={(e) =>
-            onChangeHandler_MultiSpace(
+            onChangeHandler_ValidName(
               e,
               formik.handleChange,
               formik.values.lastname,

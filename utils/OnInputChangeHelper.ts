@@ -10,7 +10,11 @@ const onChangeHandler = (
     e.nativeEvent.data === "" ||
     currentValue.length < maxLength
   ) {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else {
     return false;
   }
@@ -27,7 +31,11 @@ const onChangeHandler_AnySpace = (
     e.nativeEvent.data === "" ||
     (e.nativeEvent.data !== " " && currentValue.length < maxLength)
   ) {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else {
     return false;
   }
@@ -40,7 +48,11 @@ const onChangeHandler_MultiSpace = (
   isFormikChanger: boolean
 ) => {
   if (!e.nativeEvent.data || e.nativeEvent.data === "") {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else if (
     (!currentValue && e.nativeEvent.data === " ") ||
     (currentValue &&
@@ -49,7 +61,11 @@ const onChangeHandler_MultiSpace = (
   ) {
     return false;
   } else if (currentValue.length < maxLength) {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else {
     return false;
   }
@@ -67,7 +83,11 @@ const onChangeHandler_Digits = (
     (new RegExp("^[0-9]+$").test(e.nativeEvent.data) &&
       currentValue.length < maxLength)
   ) {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else {
     return false;
   }
@@ -80,12 +100,20 @@ const onChangeHandler_Decimal = (
   isFormikChanger: boolean
 ) => {
   if (!e.nativeEvent.data || e.nativeEvent.data === "") {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else if (e.nativeEvent.data === ".") {
     if (!currentValue) {
       return false;
     } else if (!currentValue.includes(".") && currentValue.length < maxLength) {
-      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+      if (handleChange) {
+        isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+      } else {
+        return true;
+      }
     } else {
       return false;
     }
@@ -93,7 +121,47 @@ const onChangeHandler_Decimal = (
     new RegExp("^[0-9]+$").test(e.nativeEvent.data) &&
     currentValue.length < maxLength
   ) {
-    isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
+  } else {
+    return false;
+  }
+};
+const onChangeHandler_ValidName = (
+  e: any,
+  handleChange: any,
+  currentValue: string,
+  maxLength: number,
+  isFormikChanger: boolean
+) => {
+  if (!e.nativeEvent.data || e.nativeEvent.data === "") {
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
+  } else if (e.nativeEvent.data === " ") {
+    if (!currentValue || currentValue.slice(-1) === " ") {
+      return false;
+    } else {
+      if (handleChange) {
+        isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+      } else {
+        return true;
+      }
+    }
+  } else if (
+    /^[a-zA-Z]*$/.test(e.nativeEvent.data) &&
+    currentValue.length < maxLength
+  ) {
+    if (handleChange) {
+      isFormikChanger ? handleChange(e) : handleChange(e.target.value);
+    } else {
+      return true;
+    }
   } else {
     return false;
   }
@@ -104,4 +172,5 @@ export {
   onChangeHandler_MultiSpace,
   onChangeHandler_Digits,
   onChangeHandler_Decimal,
+  onChangeHandler_ValidName,
 };
